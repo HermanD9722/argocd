@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-proxy-config
+data:
+  default.conf: |
+    upstream backends {
+    {{- range .Values.proxy.backends }}
+      server {{ . }};
+    {{- end }}
+    }
+    server {
+      listen 80;
+      location / {
+        proxy_pass http://backends;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      }
+    }

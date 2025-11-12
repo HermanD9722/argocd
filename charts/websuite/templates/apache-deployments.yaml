@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-a
+  labels: { app: apache-a }
+spec:
+  replicas: {{ .Values.apache.replicas }}
+  selector: { matchLabels: { app: apache-a } }
+  template:
+    metadata: { labels: { app: apache-a } }
+    spec:
+      containers:
+      - name: httpd
+        image: {{ .Values.apache.image }}
+        ports: [{ containerPort: 80 }]
+        volumeMounts:
+        - name: webroot
+          mountPath: /usr/local/apache2/htdocs/index.html
+          subPath: index.html
+      volumes:
+      - name: webroot
+        configMap:
+          name: apache-a-index
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-b
+  labels: { app: apache-b }
+spec:
+  replicas: {{ .Values.apache.replicas }}
+  selector: { matchLabels: { app: apache-b } }
+  template:
+    metadata: { labels: { app: apache-b } }
+    spec:
+      containers:
+      - name: httpd
+        image: {{ .Values.apache.image }}
+        ports: [{ containerPort: 80 }]
+        volumeMounts:
+        - name: webroot
+          mountPath: /usr/local/apache2/htdocs/index.html
+          subPath: index.html
+      volumes:
+      - name: webroot
+        configMap:
+          name: apache-b-index

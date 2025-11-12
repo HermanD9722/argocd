@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-a
+spec:
+  selector: { app: apache-a }
+  ports: [{ port: 80, targetPort: 80 }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-b
+spec:
+  selector: { app: apache-b }
+  ports: [{ port: 80, targetPort: 80 }]

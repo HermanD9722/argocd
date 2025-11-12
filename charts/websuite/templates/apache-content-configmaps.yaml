@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apache-a-index
+data:
+  index.html: |
+    <html><body style="font-family:sans-serif">
+      <h1>Apache A</h1>
+      <p>Geserveerd door Apache A</p>
+    </body></html>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apache-b-index
+data:
+  index.html: |
+    <html><body style="font-family:sans-serif">
+      <h1>Apache B</h1>
+      <p>Geserveerd door Apache B</p>
+    </body></html>
