@@ -1,0 +1,19 @@
+# DEV values
+nginx:
+  replicas: 3
+  image: nginx:1.25-alpine
+  nodePort: 32539   # hou gelijk aan je live NodePort
+
+apache:
+  replicas: 1
+  image: httpd:2.4
+
+proxy:
+  backends:
+    - apache-a.web.svc.cluster.local:80
+    - apache-b.web.svc.cluster.local:80
+
+# uitschakelen van standaard helm scaffold
+serviceAccount: { create: false }
+ingress:        { enabled: false }
+autoscaling:    { enabled: false }
